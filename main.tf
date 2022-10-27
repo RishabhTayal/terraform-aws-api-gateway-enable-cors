@@ -81,33 +81,33 @@ resource "aws_api_gateway_method_response" "_" {
   ]
 }
 
-resource "aws_api_gateway_deployment" "_" {
-  rest_api_id = var.api_id
+# resource "aws_api_gateway_deployment" "_" {
+#   rest_api_id = var.api_id
 
-  triggers = {
-    redeployment = sha1(jsonencode([
-      var.api_resource_id,
-      aws_api_gateway_method._.id,
-      aws_api_gateway_integration._.id,
-    ]))
-  }
+#   triggers = {
+#     redeployment = sha1(jsonencode([
+#       var.api_resource_id,
+#       aws_api_gateway_method._.id,
+#       aws_api_gateway_integration._.id,
+#     ]))
+#   }
 
-  lifecycle {
-    create_before_destroy = true
-  }
+#   lifecycle {
+#     create_before_destroy = true
+#   }
 
-  depends_on = [
-    aws_api_gateway_method_response._,
-  ]
-}
+#   depends_on = [
+#     aws_api_gateway_method_response._,
+#   ]
+# }
 
-resource "aws_api_gateway_stage" "_" {
-  rest_api_id = var.api_id
+# resource "aws_api_gateway_stage" "_" {
+#   rest_api_id = var.api_id
 
-  deployment_id = aws_api_gateway_deployment._.id
-  stage_name    = "prod"
+#   deployment_id = aws_api_gateway_deployment._.id
+#   stage_name    = "prod"
 
-  depends_on = [
-    aws_api_gateway_deployment._,
-  ]
-}
+#   depends_on = [
+#     aws_api_gateway_deployment._,
+#   ]
+# }
